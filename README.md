@@ -1,69 +1,26 @@
-# React + TypeScript + Vite
+Widget Install Instructions
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1. npm install
+2. npm run build
 
-Currently, two official plugins are available:
+3. copy files shopify-collection-widget.css and shopify-collection-widget.js from dist folder into asset's folder in shopify theme
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+4. copy the below code to the main-collection-product-grid.liquid and replace current code
 
-## Expanding the ESLint configuration
+<!-- Load widget styles -->
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+{{ 'shopify-collection-widget.css' | asset_url | stylesheet_tag }}
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+<!-- Widget container -->
+<div 
+  id="shopify-collection-widget"
+  data-collection-handle="{{ collection.handle }}"
+  data-shop-domain="{{ shop.permanent_domain }}"
+  data-storefront-token="STOREFRONT-API-TOKEN"
+></div>
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+<!-- Load widget script -->
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+{{ 'shopify-collection-widget.js' | asset_url | script_tag }}
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+5. replace data-storefront-token with actual app storefront token
